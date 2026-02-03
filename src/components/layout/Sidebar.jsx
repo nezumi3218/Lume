@@ -1,25 +1,31 @@
-// components/Sidebar.jsx
-import React from "react";
+import { NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+const navClass = ({ isActive }) =>
+  `block px-4 py-3 rounded-2xl transition ${
+    isActive
+      ? "bg-zinc-900 text-white dark:bg-white dark:text-black"
+      : "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800"
+  }`;
+
+export default function Sidebar() {
   return (
-    <aside className="w-64 p-4 space-y-4 hidden lg:block">
-      <div className="text-lg font-semibold">Menu</div>
-      <ul className="space-y-2">
-        <li className="hover:text-purple-600 cursor-pointer">Home</li>
-        <li className="hover:text-purple-600 cursor-pointer">Explore</li>
-        <li className="hover:text-purple-600 cursor-pointer">Notifications</li>
-        <li className="hover:text-purple-600 cursor-pointer">Messages</li>
-      </ul>
+    <div className="space-y-3">
+      <NavLink to="/" className={navClass}>
+        🏠 Home
+      </NavLink>
+      <NavLink to="/explore" className={navClass}>
+        🔥 Explore
+      </NavLink>
+      <NavLink to="/profile/muskan" className={navClass}>
+        👤 Profile
+      </NavLink>
 
-      <div className="mt-6 text-lg font-semibold">Trending</div>
-      <ul className="space-y-2">
-        <li className="hover:text-purple-600 cursor-pointer">#React</li>
-        <li className="hover:text-purple-600 cursor-pointer">#TailwindCSS</li>
-        <li className="hover:text-purple-600 cursor-pointer">#Frontend</li>
-      </ul>
-    </aside>
+      <div className="rounded-2xl bg-white dark:bg-zinc-900 p-4 border border-zinc-200 dark:border-zinc-800">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          Pinteresty feed ✨ <br />
+          clean + minimal
+        </p>
+      </div>
+    </div>
   );
-};
-
-export default Sidebar;
+}

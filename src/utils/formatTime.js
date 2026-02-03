@@ -1,0 +1,16 @@
+export function formatTime(dateInput) {
+  const d = new Date(dateInput);
+  const now = new Date();
+
+  const diff = Math.floor((now - d) / 1000);
+  if (diff < 60) return `${diff}s ago`;
+
+  const mins = Math.floor(diff / 60);
+  if (mins < 60) return `${mins}m ago`;
+
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+
+  const days = Math.floor(hrs / 24);
+  return `${days}d ago`;
+}
