@@ -6,7 +6,7 @@ export default function Login() {
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
 
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ identifier: "", password: "" });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) =>
@@ -15,20 +15,30 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log(form);
 
     try {
+      const identifier = form.identifier.trim();
+      const password = form.password.trim();
+
+      if (!identifier || !password) {
+        throw new Error("Please enter email/username and password");
+      }
+
+      // ✅ If it contains "@", treat it as email else username
+      const payload = identifier.includes("@gmail")
+        ? { email: identifier, password }
+        : { username: identifier, password };
+
       const res = await fetch("http://localhost:8000/api/v1/users/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login failed");
 
       setAuth({ token: data.data.accessToken, user: data.data.user });
-      // console.log(data.data.accessToken, data.data.user);
       navigate("/");
     } catch (err) {
       alert(err.message);
@@ -52,10 +62,11 @@ export default function Login() {
                        text-zinc-900 dark:text-zinc-100
                        px-4 py-3 text-sm outline-none
                        focus:ring-2 focus:ring-zinc-300 dark:focus:ring-zinc-700"
-            name="email"
-            placeholder="Enter email"
-            value={form.email?.trim()}
+            name="identifier"
+            placeholder="Email or Username"
+            value={form.identifier}
             onChange={handleChange}
+            autoComplete="username"
           />
 
           <input
@@ -69,12 +80,14 @@ export default function Login() {
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
+            autoComplete="current-password"
           />
 
           <button
             disabled={loading}
             className="w-full rounded-xl px-4 py-3 font-medium transition
                        bg-zinc-900 text-white hover:opacity-90
+                       disabled:opacity-60 disabled:cursor-not-allowed
                        dark:bg-white dark:text-zinc-900"
           >
             {loading ? "Logging in..." : "Login"}
