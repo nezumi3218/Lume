@@ -1,9 +1,11 @@
 export default function PostCard({ post }) {
+  console.log(post);
+
   return (
     <div className="group rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 shadow-sm hover:shadow-lg transition">
       <div className="relative">
         <img
-          src={post.image}
+          src={post.postImage.url}
           alt="post"
           className="w-full object-cover group-hover:scale-[1.02] transition duration-300"
         />
@@ -21,9 +23,9 @@ export default function PostCard({ post }) {
           {post.caption}
         </p>
 
-        <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+        {/* <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
           @{post.owner.username}
-        </p>
+        </p> */}
       </div>
     </div>
   );

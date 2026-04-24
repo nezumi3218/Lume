@@ -17,6 +17,10 @@ export default function Topbar() {
     applyTheme(initial);
   }, []);
 
+  const createPost = () => {
+    navigate("/create-post");
+  };
+
   const toggleTheme = () => {
     if (!theme) return; // prevent toggle before theme loads
     const next = theme === "dark" ? "light" : "dark";
@@ -39,6 +43,15 @@ export default function Topbar() {
       </h2>
 
       <div className="flex items-center gap-2">
+        <button
+          onClick={createPost}
+          className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 text-sm
+                     bg-white dark:bg-zinc-950
+                     text-zinc-900 dark:text-zinc-100
+                     hover:bg-zinc-100 dark:hover:bg-zinc-900 transition"
+        >
+          +
+        </button>
         <button
           onClick={toggleTheme}
           className="px-3 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 text-sm
