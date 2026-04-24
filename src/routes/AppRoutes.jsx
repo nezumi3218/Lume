@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Explore from "../pages/Explore";
 import Profile from "../pages/Profile";
 import PostDetails from "../pages/PostDetails";
+import CreatePost from "../components/post/CreatePost";
 
 import AppLayout from "../components/layout/AppLayout";
 
@@ -50,6 +51,7 @@ export default function AppRoutes() {
           <Route path="/explore" element={<Explore />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/post/:id" element={<PostDetails />} />
+          <Route path="/create-post" element={<CreatePost />} />
         </Route>
 
         {/* 404 */}

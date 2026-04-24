@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import PostCard from "../components/post/PostCard";
-import { getFeedPosts } from "../api/post.js";
+import PostDetails from "./PostDetails";
+
+import { useNavigate } from "react-router-dom";
+import { getFeedPosts } from "../lib/post";
 
 export default function Home() {
+  const navigate = useNavigate();
+
   const [feed, setFeed] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -12,11 +17,13 @@ export default function Home() {
       setLoading(true);
       setError("");
 
-      const res = await getFeedPosts();
-      console.log("FEED RESPONSE:", res);
+      const response = await getFeedPosts();
 
-      // 🔥 adapt to your backend response shape
-      const postsArray = res?.posts || res?.data || res?.feedPosts || res || [];
+      const data = response;
+
+      console.log("FEED RESPONSE:", data);
+
+      const postsArray = data?.data?.posts || [];
 
       setFeed(Array.isArray(postsArray) ? postsArray : []);
     } catch (err) {
@@ -121,7 +128,14 @@ export default function Home() {
         {!loading && !error && feed.length > 0 && (
           <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
             {feed.map((post) => (
-              <div key={post._id} className="mb-4 break-inside-avoid">
+              <div
+                key={post._id}
+                className="mb-4 break-inside-avoid"
+                onClick={() => {
+                  // console.log(post);
+                  navigate(`/post/${post._id}`);
+                }}
+              >
                 <PostCard post={post} />
               </div>
             ))}

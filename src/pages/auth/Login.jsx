@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "../../store/authstore";
+import { loginUser } from "../../lib/auth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -23,23 +24,25 @@ export default function Login() {
       if (!identifier || !password) {
         throw new Error("Please enter email/username and password");
       }
-
-      // ✅ If it contains "@", treat it as email else username
       const payload = identifier.includes("@gmail")
         ? { email: identifier, password }
         : { username: identifier, password };
 
-      const res = await fetch("http://localhost:8000/api/v1/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+      const res = await loginUser({ body: payload });
+
+      console.log("login response handle submit", res);
+
+      localStorage.setItem("accessToken", res.data.accessToken);
+      localStorage.setItem("refreshToken", res.data.refreshToken);
+
+      console.log("after token");
+      setAuth({
+        user: res.data.user,
+        token: res.data.accessToken,
       });
+      navigate("/", { replace: true });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Login failed");
-
-      setAuth({ token: data.data.accessToken, user: data.data.user });
-      navigate("/");
+      console.log("after navigate");
     } catch (err) {
       alert(err.message);
     } finally {

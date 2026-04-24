@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { registerUser } from "../../lib/auth";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -42,13 +43,11 @@ export default function Register() {
         fd.append("coverImage", coverImage);
       }
 
-      const res = await fetch("http://localhost:8000/api/v1/users/register", {
-        method: "POST",
-        body: fd, // ✅ FormData (no Content-Type header)
-      });
+      const res = await registerUser({ body: fd });
+      // console.log("register Response", res);
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Register failed");
+      localStorage.setItem("accessToken", res.accessToken);
+      localStorage.setItem("refreshToken", res.refreshToken);
 
       alert("Account created! Now login 💖");
       navigate("/login");
