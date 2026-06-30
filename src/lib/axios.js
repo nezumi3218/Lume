@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8000/api/v1", // change to your backend url
+  baseURL: "https://backend-js-uc2d.vercel.app/api/v1", // change to your backend url
   withCredentials: true,
 });
 
