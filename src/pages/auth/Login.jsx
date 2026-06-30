@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuthStore } from "../../store/authstore";
 import { loginUser } from "../../lib/auth";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -40,11 +41,13 @@ export default function Login() {
         user: res.data.user,
         token: res.data.accessToken,
       });
+
+      toast.success("Logged in successfully!!");
       navigate("/", { replace: true });
 
       console.log("after navigate");
     } catch (err) {
-      alert(err.message);
+      toast.error("Login failed!");
     } finally {
       setLoading(false);
     }

@@ -38,7 +38,7 @@ export default function Topbar() {
 
   return (
     <div className="h-14 px-4 flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-      <h2 className="font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+      <h2 className="font-semibold tracking-tight text-2xl text-pink-600">
         Lume
       </h2>
 

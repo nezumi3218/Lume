@@ -1,12 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getFeedPosts, getSinglePostById } from "../lib/post.js";
+import {
+  getSinglePostById,
+  toggleLikePost,
+  getLikesCount,
+} from "../lib/post.js";
 
 export default function PostDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [post, setPost] = useState(null);
-  const [related, setRelated] = useState([]);
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -14,17 +18,12 @@ export default function PostDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Main post
-        console.log(id);
-        const data = await getSinglePostById(id);
+        const res = await getSinglePostById(id);
 
-        setPost(data.data);
-        setLikesCount(data.data.likes);
+        const postData = res.data;
 
-        // Fake related posts (replace with backend later)
-        // const relData = await getFeedPosts();
-
-        // setRelated(relData.data || []);
+        setPost(postData);
+        setLikesCount(postData.likes);
       } catch (err) {
         console.error(err);
       } finally {
@@ -35,9 +34,25 @@ export default function PostDetails() {
     fetchData();
   }, [id]);
 
-  const handleLike = () => {
-    setLiked(!liked);
-    setLikesCount((prev) => (liked ? prev - 1 : prev + 1));
+  const handleLike = async () => {
+    try {
+      const prevLiked = liked;
+
+      // Optimistic UI
+      setLiked(!prevLiked);
+      setLikesCount((prev) => (prevLiked ? prev - 1 : prev + 1));
+
+      await toggleLikePost(id);
+
+      const res = await getLikesCount(id);
+      setLikesCount(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getProfile = (userId) => {
+    navigate(`/profile/${post?.owner?.username}`);
   };
 
   if (loading) {
@@ -63,7 +78,6 @@ export default function PostDetails() {
               <div className="flex items-center justify-between">
                 <div className="flex gap-4 text-lg">
                   <button onClick={handleLike}>{liked ? "❤️" : "🤍"}</button>
-
                   <button>💬</button>
                   <button>🔗</button>
                 </div>
@@ -78,6 +92,14 @@ export default function PostDetails() {
                 {likesCount} likes • {post?.comments} comments
               </div>
 
+              {/* ✅ USERNAME (FIXED) */}
+              <div
+                className="text-sm text-zinc-300 cursor-pointer hover:underline"
+                onClick={() => getProfile(post?.owner?._id)}
+              >
+                @{post?.owner?.username}
+              </div>
+
               {/* Caption */}
               <p className="text-base text-zinc-200">{post?.caption}</p>
 
@@ -89,26 +111,12 @@ export default function PostDetails() {
           </div>
         </div>
 
-        {/* RIGHT - RELATED POSTS */}
+        {/* RIGHT - RELATED POSTS (optional for now) */}
         <div className="hidden lg:block">
           <h3 className="text-lg font-semibold mb-4 text-zinc-300">
             More like this
           </h3>
-
-          <div className="grid grid-cols-2 gap-4">
-            {related.slice(0, 8).map((item) => (
-              <div
-                key={item._id}
-                className="rounded-xl overflow-hidden bg-zinc-800 hover:scale-105 transition cursor-pointer"
-              >
-                <img
-                  src={item.postImage?.url}
-                  alt=""
-                  className="w-full h-40 object-cover"
-                />
-              </div>
-            ))}
-          </div>
+          <p className="text-zinc-500 text-sm">(Add related posts later)</p>
         </div>
       </div>
     </div>

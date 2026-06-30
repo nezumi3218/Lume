@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../../lib/auth";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function Register() {
       localStorage.setItem("accessToken", res.accessToken);
       localStorage.setItem("refreshToken", res.refreshToken);
 
-      alert("Account created! Now login 💖");
+      toast.success("Account created!! Now login");
       navigate("/login");
     } catch (err) {
       alert(err.message);

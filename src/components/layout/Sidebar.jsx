@@ -21,12 +21,12 @@ export default function Sidebar() {
         🏠 Home
       </div>
 
-      <div
+      {/* <div
         onClick={() => navigate("/explore")}
         className={navClass("/explore")}
       >
         🔥 Explore
-      </div>
+      </div> */}
 
       <div
         onClick={() => {
@@ -38,7 +38,7 @@ export default function Sidebar() {
 
       <div className="rounded-2xl bg-white dark:bg-zinc-900 p-4 border border-zinc-200 dark:border-zinc-800">
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
-          Pinteresty feed ✨ <br />
+          Explore your feed ✨ <br />
           clean + minimal
         </p>
       </div>
