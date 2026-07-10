@@ -47,11 +47,18 @@ export default function Register() {
       const res = await registerUser({ body: fd });
       // console.log("register Response", res);
 
-      localStorage.setItem("accessToken", res.accessToken);
-      localStorage.setItem("refreshToken", res.refreshToken);
+      toast.success(res.message || "OTP sent to your email!");
 
-      toast.success("Account created!! Now login");
-      navigate("/login");
+      navigate("/verify-email", {
+        state: {
+          email: form.email,
+        },
+      });
+
+      // localStorage.setItem("accessToken", res.accessToken);
+      // localStorage.setItem("refreshToken", res.refreshToken);
+
+      
     } catch (err) {
       alert(err.message);
     } finally {

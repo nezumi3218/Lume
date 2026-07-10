@@ -13,6 +13,7 @@ import AppLayout from "../components/layout/AppLayout";
 
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
+import VerifyEmail from "../pages/VerifyEmail";
 
 export default function AppRoutes() {
   return (
@@ -35,6 +36,15 @@ export default function AppRoutes() {
           element={
             <PublicRoute>
               <Register />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/verify-email"
+          element={
+            <PublicRoute>
+              <VerifyEmail />
             </PublicRoute>
           }
         />
