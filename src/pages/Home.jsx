@@ -57,7 +57,7 @@ export default function Home() {
             onClick={loadFeed}
             className="shrink-0 px-4 py-2 rounded-2xl text-sm font-medium
               bg-zinc-900 text-white dark:bg-white dark:text-zinc-900
-              hover:scale-[1.02] active:scale-[0.98] transition"
+              hover:scale-[1.02] active:scale-[0.98] transition cursor-pointer"
           >
             Refresh
           </button>
@@ -126,7 +126,7 @@ export default function Home() {
 
         {/* Grid */}
         {!loading && !error && feed.length > 0 && (
-          <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+          <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 cursor-pointer">
             {feed.map((post) => (
               <div
                 key={post._id}

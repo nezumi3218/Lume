@@ -11,8 +11,8 @@ export default function Sidebar() {
   const navClass = (path) =>
     `block px-4 py-3 rounded-2xl transition cursor-pointer ${
       location.pathname.startsWith(path)
-        ? "bg-zinc-900 text-white dark:bg-white dark:text-black"
-        : "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800"
+        ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800"
+        : "bg-zinc-900 text-white dark:bg-white dark:text-black"
     }`;
 
   return (

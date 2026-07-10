@@ -35,7 +35,7 @@ export default function CreatePost() {
 
       const res = await uploadPost(formData);
 
-      console.log("Post created:", res);
+      // console.log("Post created:", res);
 
       // Reset form
       setCaption("");

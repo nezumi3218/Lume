@@ -1,5 +1,5 @@
 export default function PostCard({ post }) {
-  console.log(post);
+  // console.log(post);
 
   return (
     <div className="group rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 shadow-sm hover:shadow-lg transition">
@@ -12,7 +12,7 @@ export default function PostCard({ post }) {
 
         {/* Hover overlay buttons */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition bg-black/20 flex items-start justify-end p-3">
-          <button className="px-3 py-1 rounded-full bg-white text-black text-sm font-medium">
+          <button className="px-3 py-1 rounded-full bg-white text-black text-sm cursor-pointer font-medium">
             Save
           </button>
         </div>
