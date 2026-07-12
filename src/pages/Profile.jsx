@@ -55,11 +55,11 @@ export default function Profile() {
   return (
     <div>
       {/* 🌄 Cover */}
-      <div className="relative h-52 md:h-64 w-full rounded-2xl overflow-hidden">
+      <div className="relative h-52 md:h-64 w-full rounded-2xl ">
         <img
           src={user.coverImage?.url}
           alt="cover"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover overflow-hidden"
         />
 
         {/* Avatar */}
@@ -83,9 +83,9 @@ export default function Profile() {
           </span>
         </div>
 
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <Button>Follow</Button>
-        </div>
+        </div> */}
       </div>
 
       {/* 📌 POSTS */}
