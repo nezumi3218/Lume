@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "backendjs-production.up.railway.app", // change to your backend url
+  baseURL: import.meta.env.VITE_API_URL, // change to your backend url
   withCredentials: true,
 });
 
