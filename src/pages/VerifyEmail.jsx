@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { verifyEmail, resendOTP } from "../lib/auth"; // adjust path if needed
+import { verifyEmail, sendOTP } from "../lib/email"; // adjust path if needed
 
 export default function VerifyEmail() {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ export default function VerifyEmail() {
     }
 
     try {
-      await resendOTP({
+      await sendOTP({
         email,
       });
 

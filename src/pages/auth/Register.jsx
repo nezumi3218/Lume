@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../../lib/auth";
 import { toast } from "react-toastify";
+import { sendOTP } from "../../lib/email";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -46,8 +47,15 @@ export default function Register() {
 
       const res = await registerUser({ body: fd });
       // console.log("register Response", res);
+      try {
+        await sendOTP({
+          email: form.email,
+        });
 
-      toast.success(res.message || "OTP sent to your email!");
+        toast.success(res.message || "OTP sent to your email!");
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to resend OTP.");
+      }
 
       navigate("/verify-email", {
         state: {
@@ -57,8 +65,6 @@ export default function Register() {
 
       // localStorage.setItem("accessToken", res.accessToken);
       // localStorage.setItem("refreshToken", res.refreshToken);
-
-      
     } catch (err) {
       alert(err.message);
     } finally {
