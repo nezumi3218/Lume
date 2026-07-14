@@ -53,15 +53,15 @@ export default function Register() {
         });
 
         toast.success(res.message || "OTP sent to your email!");
+
+        navigate("/verify-email", {
+          state: {
+            email: form.email,
+          },
+        });
       } catch (error) {
         toast.error(error.response?.data?.message || "Failed to resend OTP.");
       }
-
-      navigate("/verify-email", {
-        state: {
-          email: form.email,
-        },
-      });
 
       // localStorage.setItem("accessToken", res.accessToken);
       // localStorage.setItem("refreshToken", res.refreshToken);
